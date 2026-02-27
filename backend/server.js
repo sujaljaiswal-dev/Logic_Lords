@@ -25,11 +25,24 @@ app.get('/', (req, res) => res.json({ message: 'MindSaathi API Running' }));
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI)
+console.log('🔄 Connecting to MongoDB...');
+console.log('Host:', process.env.MONGO_URI.split('@')[1]?.split('/')[0] || 'unknown');
+mongoose.connect(process.env.MONGO_URI, {
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+})
   .then(() => {
-    console.log('MongoDB Connected');
+    console.log('✅ MongoDB Connected Successfully');
     app.listen(process.env.PORT || 5000, () => {
-      console.log(`Server running on port ${process.env.PORT || 5000}`);
+      console.log(`🚀 Server running on port ${process.env.PORT || 5000}`);
     });
   })
-  .catch(err => console.error('MongoDB connection error:', err));
+  .catch(err => {
+    console.error('❌ MongoDB connection error:', err.message);
+    console.error('\n⚠️ Common fixes:');
+    console.error('1. Verify credentials in .env (username & password)');
+    console.error('2. Check MongoDB Atlas - Allow your IP in Network Access');
+    console.error('3. Make sure the cluster is active and not paused');
+    console.error('4. Verify internet connection\n');
+    process.exit(1);
+  });

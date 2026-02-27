@@ -39,9 +39,61 @@ export default function Chat() {
   const speak = useCallback((text) => {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    const langMap = { english: 'en-IN', hindi: 'hi-IN', marathi: 'mr-IN' };
-    utterance.lang = langMap[user?.languagePreference] || 'en-IN';
+    const langMap = { 
+      english: 'en-US', 
+      hindi: 'hi-IN', 
+      marathi: 'mr-IN' 
+    };
+    utterance.lang = langMap[user?.languagePreference] || 'en-US';
+    
+    // Optimize voice settings for natural Indian accent
+    if (user?.languagePreference === 'marathi') {
+      utterance.rate = 0.85; // Slightly slower for Marathi clarity
+      utterance.pitch = 0.95; // Slightly lower pitch for natural Marathi voice
+      utterance.volume = 1.0;
+    } else if (user?.languagePreference === 'hindi') {
+      utterance.rate = 0.9;
+      utterance.pitch = 1.0;
+      utterance.volume = 1.0;
+    } else {
+      utterance.rate = 1.0;
+      utterance.pitch = 1.0;
+      utterance.volume = 1.0;
+    }
+    
+    // Get all available voices and select the best match
+    const voices = window.speechSynthesis.getVoices();
+    if (voices.length > 0) {
+      const langCode = langMap[user?.languagePreference] || 'en-US';
+      
+      // First, try to find exact language match (prioritize native speakers)
+      let selectedVoice = voices.find(voice => 
+        voice.lang === langCode && voice.name.toLowerCase().includes('india')
+      );
+      
+      // If not found, try language family match
+      if (!selectedVoice) {
+        selectedVoice = voices.find(voice => voice.lang.startsWith(langCode.split('-')[0]));
+      }
+      
+      // Last resort: try any voice that supports the language
+      if (!selectedVoice) {
+        selectedVoice = voices.find(voice => voice.lang.includes(langCode.split('-')[0]));
+      }
+      
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
+        console.log('✅ Using voice:', selectedVoice.name, 'Language:', selectedVoice.lang);
+      } else {
+        console.warn('⚠️ No optimal voice found for', langCode, '. Using system default.');
+      }
+    }
+    
     utterance.onstart = () => setIsSpeaking(true);
+    utterance.onerror = (event) => {
+      console.error('Speech synthesis error:', event.error);
+      setIsSpeaking(false);
+    };
     utterance.onend = () => setIsSpeaking(false);
     window.speechSynthesis.speak(utterance);
   }, [user?.languagePreference]);
@@ -91,6 +143,13 @@ export default function Chat() {
         }
       }).catch(() => { });
     }
+    
+    // Ensure voices are loaded for speech synthesis
+    if (window.speechSynthesis) {
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
+      };
+    }
   }, [isIncognito, user?.languagePreference]);
 
   // Initialize Web Speech API - only once on mount
@@ -106,7 +165,7 @@ export default function Chat() {
     recognition.continuous = false;
     recognition.interimResults = true;
     recognition.lang = user?.languagePreference === 'hindi' ? 'hi-IN' :
-      user?.languagePreference === 'marathi' ? 'mr-IN' : 'en-IN';
+      user?.languagePreference === 'marathi' ? 'mr' : 'en-US';
 
     recognition.onstart = () => {
       console.log('🎙️ Recognition started');

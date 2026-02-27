@@ -24,13 +24,18 @@ export default function Register() {
     if (form.password !== form.confirmPassword) {
       return setError('Passwords do not match');
     }
+    if (form.password.length < 6) {
+      return setError('Password must be at least 6 characters');
+    }
     setLoading(true);
     try {
       const { confirmPassword, ...payload } = form;
       await register(payload);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed. Please try again.');
+      console.error('Registration error:', err);
+      const errorMsg = err.response?.data?.message || err.message || 'Registration failed. Please try again or choose a different username.';
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }

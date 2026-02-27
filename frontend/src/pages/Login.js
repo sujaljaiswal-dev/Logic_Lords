@@ -20,7 +20,9 @@ export default function Login() {
       await login(form.username, form.password);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed. Please try again.');
+      console.error('Login error:', err);
+      const errorMsg = err.response?.data?.message || err.message || 'Login failed. Please check your credentials and try again.';
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }

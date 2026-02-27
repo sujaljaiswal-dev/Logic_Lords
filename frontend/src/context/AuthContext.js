@@ -5,6 +5,11 @@ const AuthContext = createContext(null);
 
 const API = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
+// Log API configuration on mount
+if (typeof window !== 'undefined') {
+  console.log('🌐 API URL configured as:', API);
+}
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('ms_token'));
@@ -33,23 +38,33 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = async (username, password) => {
-    const res = await axios.post(`${API}/auth/login`, { username, password });
-    const { token: newToken, user: userData } = res.data;
-    localStorage.setItem('ms_token', newToken);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-    setToken(newToken);
-    setUser(userData);
-    return userData;
+    try {
+      const res = await axios.post(`${API}/auth/login`, { username, password });
+      const { token: newToken, user: userData } = res.data;
+      localStorage.setItem('ms_token', newToken);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+      setToken(newToken);
+      setUser(userData);
+      return userData;
+    } catch (error) {
+      console.error('Login request failed:', error.message, 'API URL:', API);
+      throw error;
+    }
   };
 
   const register = async (formData) => {
-    const res = await axios.post(`${API}/auth/register`, formData);
-    const { token: newToken, user: userData } = res.data;
-    localStorage.setItem('ms_token', newToken);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-    setToken(newToken);
-    setUser(userData);
-    return userData;
+    try {
+      const res = await axios.post(`${API}/auth/register`, formData);
+      const { token: newToken, user: userData } = res.data;
+      localStorage.setItem('ms_token', newToken);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+      setToken(newToken);
+      setUser(userData);
+      return userData;
+    } catch (error) {
+      console.error('Registration request failed:', error.message, 'API URL:', API);
+      throw error;
+    }
   };
 
   const logout = () => {

@@ -1,0 +1,227 @@
+/* Login Page Styles */
+
+.auth-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.auth-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 420px;
+    padding: 48px;
+    animation: slideInUp 500ms ease-out;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.auth-logo {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: white;
+    margin: 0 auto 20px;
+}
+
+.auth-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.auth-subtitle {
+    font-size: 14px;
+    color: #666666;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auth-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.auth-form-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.auth-form-input {
+    padding: 12px 16px;
+    font-size: 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    color: #1a1a1a;
+    transition: all 200ms ease-in-out;
+    font-family: inherit;
+}
+
+.auth-form-input:focus {
+    outline: none;
+    border-color: #0066ff;
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+}
+
+.auth-form-input::placeholder {
+    color: #999999;
+}
+
+.auth-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.auth-form-grid .auth-form-group {
+    margin: 0;
+}
+
+.auth-error {
+    background-color: #fee2e2;
+    border: 1px solid #ff6b6b;
+    color: #ff6b6b;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.auth-form-submit {
+    background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+    margin-top: 8px;
+}
+
+.auth-form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 102, 255, 0.3);
+}
+
+.auth-form-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.auth-divider {
+    text-align: center;
+    font-size: 14px;
+    color: #999999;
+    position: relative;
+    margin: 24px 0;
+}
+
+.auth-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #e0e0e0;
+}
+
+.auth-divider span {
+    background: white;
+    padding: 0 12px;
+    position: relative;
+}
+
+.auth-toggle {
+    text-align: center;
+    font-size: 14px;
+    color: #666666;
+    margin-top: 20px;
+}
+
+.auth-toggle a {
+    color: #0066ff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 200ms ease-in-out;
+}
+
+.auth-toggle a:hover {
+    color: #0052cc;
+    text-decoration: underline;
+}
+
+.auth-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.auth-loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .auth-card {
+        padding: 32px 20px;
+    }
+
+    .auth-title {
+        font-size: 24px;
+    }
+
+    .auth-form-grid {
+        grid-template-columns: 1fr;
+    }
+}

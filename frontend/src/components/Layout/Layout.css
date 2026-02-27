@@ -1,0 +1,211 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--cream);
+}
+
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: var(--deep);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  transition: background var(--transition);
+}
+
+.sidebar.incognito {
+  background: var(--incognito-bg);
+  border-right: 1px solid #2e3650;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-logo .logo-icon {
+  width: 42px;
+  height: 42px;
+  background: var(--sage);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.sidebar-logo h2 {
+  font-family: 'Playfair Display', serif;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.sidebar-logo span {
+  color: var(--sage-light);
+  font-size: 0.75rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+}
+
+.incognito-badge {
+  display: inline-block;
+  background: var(--incognito-accent);
+  color: white;
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  list-style: none;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.nav-links li a {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  color: rgba(255,255,255,0.65);
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all var(--transition);
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
+  background: rgba(122, 158, 126, 0.2);
+  color: var(--sage-light);
+}
+
+.sidebar.incognito .nav-links li a:hover,
+.sidebar.incognito .nav-links li a.active {
+  background: rgba(108, 142, 191, 0.2);
+  color: var(--incognito-accent);
+}
+
+.nav-links li a .nav-icon {
+  font-size: 1.15rem;
+  width: 22px;
+}
+
+.sidebar-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.incognito-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-sm);
+  color: rgba(255,255,255,0.75);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  width: 100%;
+}
+
+.incognito-toggle:hover {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+.incognito-toggle.active {
+  background: rgba(108, 142, 191, 0.2);
+  border-color: var(--incognito-accent);
+  color: var(--incognito-accent);
+}
+
+.toggle-switch {
+  width: 32px;
+  height: 18px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 9px;
+  position: relative;
+  margin-left: auto;
+  transition: background var(--transition);
+}
+
+.toggle-switch.on {
+  background: var(--incognito-accent);
+}
+
+.toggle-knob {
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform var(--transition);
+}
+
+.toggle-switch.on .toggle-knob {
+  transform: translateX(14px);
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: 1px solid rgba(196, 112, 74, 0.4);
+  border-radius: var(--radius-sm);
+  color: var(--terracotta-light);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  width: 100%;
+}
+
+.logout-btn:hover {
+  background: rgba(196, 112, 74, 0.1);
+}
+
+.main-content {
+  margin-left: 260px;
+  flex: 1;
+  min-height: 100vh;
+  transition: background var(--transition);
+}
+
+.main-content.incognito {
+  background: #141824;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 220px;
+  }
+  .main-content {
+    margin-left: 220px;
+  }
+}

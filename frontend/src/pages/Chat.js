@@ -39,13 +39,13 @@ export default function Chat() {
   const speak = useCallback((text) => {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    const langMap = { 
-      english: 'en-US', 
-      hindi: 'hi-IN', 
-      marathi: 'mr-IN' 
+    const langMap = {
+      english: 'en-US',
+      hindi: 'hi-IN',
+      marathi: 'mr-IN'
     };
     utterance.lang = langMap[user?.languagePreference] || 'en-US';
-    
+
     // Optimize voice settings for natural Indian accent
     if (user?.languagePreference === 'marathi') {
       utterance.rate = 0.85; // Slightly slower for Marathi clarity
@@ -60,27 +60,27 @@ export default function Chat() {
       utterance.pitch = 1.0;
       utterance.volume = 1.0;
     }
-    
+
     // Get all available voices and select the best match
     const voices = window.speechSynthesis.getVoices();
     if (voices.length > 0) {
       const langCode = langMap[user?.languagePreference] || 'en-US';
-      
+
       // First, try to find exact language match (prioritize native speakers)
-      let selectedVoice = voices.find(voice => 
+      let selectedVoice = voices.find(voice =>
         voice.lang === langCode && voice.name.toLowerCase().includes('india')
       );
-      
+
       // If not found, try language family match
       if (!selectedVoice) {
         selectedVoice = voices.find(voice => voice.lang.startsWith(langCode.split('-')[0]));
       }
-      
+
       // Last resort: try any voice that supports the language
       if (!selectedVoice) {
         selectedVoice = voices.find(voice => voice.lang.includes(langCode.split('-')[0]));
       }
-      
+
       if (selectedVoice) {
         utterance.voice = selectedVoice;
         console.log('✅ Using voice:', selectedVoice.name, 'Language:', selectedVoice.lang);
@@ -88,7 +88,7 @@ export default function Chat() {
         console.warn('⚠️ No optimal voice found for', langCode, '. Using system default.');
       }
     }
-    
+
     utterance.onstart = () => setIsSpeaking(true);
     utterance.onerror = (event) => {
       console.error('Speech synthesis error:', event.error);
@@ -143,7 +143,7 @@ export default function Chat() {
         }
       }).catch(() => { });
     }
-    
+
     // Ensure voices are loaded for speech synthesis
     if (window.speechSynthesis) {
       window.speechSynthesis.onvoiceschanged = () => {

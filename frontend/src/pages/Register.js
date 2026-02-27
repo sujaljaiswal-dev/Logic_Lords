@@ -50,7 +50,7 @@ export default function Register() {
           <p>Join thousands finding peace and support through compassionate AI</p>
         </div>
         <div className="auth-tagline">
-          <div className="auth-feature"><span>🗣️</span><span>Hindi, Marathi & English support</span></div>
+          <div className="auth-feature"><span>🗣️</span><span>Hindi & English support</span></div>
           <div className="auth-feature"><span>🏘️</span><span>Tailored for urban & rural India</span></div>
           <div className="auth-feature"><span>🧘</span><span>Guided by psychiatry best practices</span></div>
           <div className="auth-feature"><span>📓</span><span>AI-generated daily journal entries</span></div>
@@ -104,7 +104,6 @@ export default function Register() {
               <select name="languagePreference" value={form.languagePreference} onChange={handleChange}>
                 <option value="english">English</option>
                 <option value="hindi">हिंदी (Hindi)</option>
-                <option value="marathi">मराठी (Marathi)</option>
               </select>
             </div>
             <div className="form-group">

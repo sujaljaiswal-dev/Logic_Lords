@@ -38,7 +38,7 @@ const detectStressLevel = (text) => {
 
 // Build system prompt based on user preferences
 const buildSystemPrompt = (user) => {
-  const langMap = { english: 'English', hindi: 'Hindi', marathi: 'Marathi' };
+  const langMap = { english: 'English', hindi: 'Hindi' };
   const lang = langMap[user.languagePreference] || 'English';
   const location = user.locality === 'rural' ? 'rural' : 'urban';
 
@@ -167,9 +167,7 @@ router.post('/message', protect, async (req, res) => {
       // Return a fallback response if Groq fails
       aiResponse = user.languagePreference === 'hindi'
         ? "I understand. क्या आप इस बारे में और कुछ बता सकते हैं?"
-        : user.languagePreference === 'marathi'
-          ? "I understand. यावर आणखी काही बोलू शकता का?"
-          : "I'm listening. Tell me more about what you're feeling.";
+        : "I'm listening. Tell me more about what you're feeling.";
     }
 
     console.log('✅ AI Response:', aiResponse.substring(0, 50) + '...');

@@ -8,7 +8,6 @@ const API = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 const WELCOME_MESSAGES = {
   english: "Hello! I'm MindSaathi, your mental health companion. How are you feeling today? 🌿",
   hindi: "नमस्ते! मैं MindSaathi हूँ, आपका मानसिक स्वास्थ्य साथी। आज आप कैसा महसूस कर रहे हैं? 🌿",
-  marathi: "नमस्कार! मी MindSaathi आहे, तुमचा मानसिक आरोग्य साथी. आज तुम्हाला कसे वाटत आहे? 🌿",
 };
 
 export default function Chat() {
@@ -41,17 +40,12 @@ export default function Chat() {
     const utterance = new SpeechSynthesisUtterance(text);
     const langMap = {
       english: 'en-US',
-      hindi: 'hi-IN',
-      marathi: 'mr-IN'
+      hindi: 'hi-IN'
     };
     utterance.lang = langMap[user?.languagePreference] || 'en-US';
 
     // Optimize voice settings for natural Indian accent
-    if (user?.languagePreference === 'marathi') {
-      utterance.rate = 0.85; // Slightly slower for Marathi clarity
-      utterance.pitch = 0.95; // Slightly lower pitch for natural Marathi voice
-      utterance.volume = 1.0;
-    } else if (user?.languagePreference === 'hindi') {
+    if (user?.languagePreference === 'hindi') {
       utterance.rate = 0.9;
       utterance.pitch = 1.0;
       utterance.volume = 1.0;
@@ -164,8 +158,7 @@ export default function Chat() {
     const recognition = new SpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = true;
-    recognition.lang = user?.languagePreference === 'hindi' ? 'hi-IN' :
-      user?.languagePreference === 'marathi' ? 'mr' : 'en-US';
+    recognition.lang = user?.languagePreference === 'hindi' ? 'hi-IN' : 'en-US';
 
     recognition.onstart = () => {
       console.log('🎙️ Recognition started');

@@ -9,7 +9,6 @@ const API = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 const TIPS = [
   "Take 5 deep breaths when you feel overwhelmed. Inhale for 4 counts, hold for 4, exhale for 6.",
   "एक छोटा ब्रेक लें। पानी पिएं और खिड़की के बाहर देखें।",
-  "आपण एकटे नाही. प्रत्येक दिवस एक नवीन सुरुवात आहे.",
   "Try grounding: Name 5 things you see, 4 you feel, 3 you hear, 2 you smell, 1 you taste.",
   "Small progress is still progress. Be kind to yourself today.",
 ];
@@ -28,7 +27,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!isIncognito) {
-      axios.get(`${API}/journal`).then(res => setJournals(res.data)).catch(() => {});
+      axios.get(`${API}/journal`).then(res => setJournals(res.data)).catch(() => { });
     }
   }, [isIncognito]);
 

@@ -46,7 +46,7 @@ export default function Register() {
       <div className="auth-left">
         <div className="auth-brand">
           <span className="brand-icon">🌿</span>
-          <h1>MindSaathi</h1>
+          <h1>ManoRakshak</h1>
           <p>Join thousands finding peace and support through compassionate AI</p>
         </div>
         <div className="auth-tagline">

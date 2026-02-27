@@ -82,7 +82,7 @@ export default function Dashboard() {
         <div className="actions-row">
           <button className="action-btn chat" onClick={() => navigate('/chat')}>
             <span className="action-icon">💬</span>
-            <span className="action-label">Talk to MindSaathi</span>
+            <span className="action-label">Talk to ManoRakshak</span>
             <span className="action-desc">AI psychiatrist support, anytime</span>
           </button>
           {!isIncognito && (

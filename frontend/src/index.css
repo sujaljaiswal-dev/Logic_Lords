@@ -39,7 +39,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   font-family: 'DM Sans', sans-serif;
   background-color: var(--cream);
@@ -48,7 +49,9 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: 'Playfair Display', serif;
 }
 
@@ -57,7 +60,9 @@ button {
   font-family: 'DM Sans', sans-serif;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: 'DM Sans', sans-serif;
 }
 
@@ -69,9 +74,11 @@ a {
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--sand);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--sage-light);
   border-radius: 3px;

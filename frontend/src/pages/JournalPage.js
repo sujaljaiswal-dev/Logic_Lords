@@ -32,7 +32,7 @@ export default function JournalPage() {
       setJournals(res.data);
       const todayEntry = res.data.find(j => j.date === today);
       if (todayEntry) setTodayJournal(todayEntry);
-    } catch {}
+    } catch { }
   };
 
   const generateJournal = async () => {
@@ -114,7 +114,7 @@ export default function JournalPage() {
         ) : (
           <div className="journal-empty">
             <p>No journal entry yet for today.</p>
-            <p>Chat with MindSaathi and then generate your journal, or write one manually below.</p>
+            <p>Chat with ManoRakshak and then generate your journal, or write one manually below.</p>
           </div>
         )}
       </div>

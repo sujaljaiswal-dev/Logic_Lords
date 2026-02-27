@@ -611,3 +611,108 @@
 .chat-page {
   animation: fadeInUp 0.5s ease-out;
 }
+
+/* Siri Sphere Container */
+.siri-sphere {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  /* Deep mesh background instead of solid black */
+  background: radial-gradient(circle at 50% 50%, #1a1a2e, #000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.1);
+  filter: blur(0.5px);
+  /* Sharper than before for better colors */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.siri-layer {
+  position: absolute;
+  width: 140%;
+  /* Overflowing for fluid movement */
+  height: 140%;
+  border-radius: 40%;
+  /* Slightly irregular shape */
+  opacity: 0.7;
+  mix-blend-mode: screen;
+  /* This makes colors "bloom" when they overlap */
+  animation: siri-vibrate 2.5s infinite ease-in-out;
+}
+
+/* Vibrant Multi-color layers */
+.layer-1 {
+  background: radial-gradient(circle, #00ffcc 0%, transparent 60%);
+  animation-duration: 2s;
+  left: -10%;
+  top: -10%;
+}
+
+.layer-2 {
+  background: radial-gradient(circle, #ff00ff 0%, transparent 60%);
+  animation-duration: 3s;
+  animation-delay: -0.5s;
+  right: -10%;
+  bottom: -10%;
+}
+
+.layer-3 {
+  background: radial-gradient(circle, #0066ff 0%, transparent 60%);
+  animation-duration: 2.2s;
+  animation-delay: -1.2s;
+}
+
+.layer-4 {
+  /* Added a 4th layer for extra "glow" */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #ffffff 0%, transparent 50%);
+  opacity: 0.3;
+  animation: siri-vibrate 4s infinite reverse;
+}
+
+/* High-Energy Vibration and Color Shifting Animation */
+@keyframes siri-vibrate {
+
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1) translate(0, 0);
+    filter: hue-rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(90deg) scale(1.2) translate(5px, -5px);
+  }
+
+  50% {
+    transform: rotate(180deg) scale(0.9) translate(-5px, 5px);
+    filter: hue-rotate(45deg);
+    /* Subtle color shifting */
+  }
+
+  75% {
+    transform: rotate(270deg) scale(1.1) translate(3px, 3px);
+  }
+}
+
+/* Outer Glow for the whole Avatar */
+.chat-avatar.speaking-active {
+  animation: siri-glow 2s infinite ease-in-out;
+  border-radius: 50%;
+}
+
+@keyframes siri-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.3), 0 0 30px rgba(255, 0, 255, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 25px rgba(0, 255, 204, 0.6), 0 0 50px rgba(0, 102, 255, 0.4);
+  }
+}

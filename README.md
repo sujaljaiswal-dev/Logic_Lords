@@ -1,13 +1,13 @@
-# 🌿 MindSaathi - Your Mental Health AI Companion
+# 🌿 ManoRakshak - Your Mental Health AI Companion
 
-**MindSaathi** is an AI-powered mental health support platform designed specifically for Indian users (Gen Z & Gen Alpha). It provides empathetic, judgment-free conversations with an AI psychiatrist that understands cultural context, emotional struggles, and the unique pressures of digital-native generations.
+**ManoRakshak** is an AI-powered mental health support platform designed specifically for Indian users (Gen Z & Gen Alpha). It provides empathetic, judgment-free conversations with an AI psychiatrist that understands cultural context, emotional struggles, and the unique pressures of digital-native generations.
 
 ---
 
 ## 📌 Table of Contents
 
 1. [Overview & Vision](#overview--vision)
-2. [Why MindSaathi Matters](#why-mindsaathi-matters)
+2. [Why ManoRakshak Matters](#why-manorakshak-matters)
 3. [How the AI Model Works](#how-the-ai-model-works)
 4. [Data Flow Architecture](#data-flow-architecture)
 5. [Key Features](#key-features)
@@ -23,7 +23,7 @@
 
 ## 🎯 Overview & Vision
 
-**MindSaathi** means "your mind's companion" in Hindi. It's a mental health platform that bridges the gap between therapy accessibility and affordability in India. 
+**ManoRakshak** (मनो-रक्षक, "mind guardian/protector") is an AI mental health platform that bridges the gap between therapy accessibility and affordability in India. 
 
 The core mission is to:
 - Provide **24/7 mental health support** without stigma
@@ -39,7 +39,7 @@ The core mission is to:
 
 ---
 
-## 🔥 Why MindSaathi Matters
+## 🔥 Why ManoRakshak Matters
 
 ### The Mental Health Crisis in India
 
@@ -65,7 +65,7 @@ The core mission is to:
 - Pressure from data-driven education systems
 - Early exposure to anxiety and depression triggers
 
-### MindSaathi's Solution:
+### ManoRakshak's Solution:
 ✅ **Accessible** - Free or low-cost compared to traditional therapy
 ✅ **Non-judgmental** - No fear of social stigma
 ✅ **Available 24/7** - Talk anytime, anywhere (even anonymously)
@@ -78,7 +78,7 @@ The core mission is to:
 ## 🧠 How the AI Model Works
 
 ### The Core Philosophy
-MindSaathi uses **Groq AI (Mixtral-8x7b)** as a **psychiatric AI** - NOT just a chatbot. Key difference:
+ManoRakshak uses **Groq AI (Mixtral-8x7b)** as a **psychiatric AI** - NOT just a chatbot. Key difference:
 
 | Feature | Chatbot | Psychiatric AI |
 |---------|---------|-----------------|
@@ -100,7 +100,7 @@ The AI is configured with a specialized psychiatric system prompt that instructs
 
 ```javascript
 // Example System Prompt Logic
-"You are MindSaathi, an empathetic AI psychiatrist.
+\"You are ManoRakshak, an empathetic AI psychiatrist.
 Your ONLY job is to have genuine therapeutic conversation.
 - Do NOT give advice
 - Do NOT suggest techniques
@@ -307,7 +307,7 @@ Currently supports:
 **Projected Conversion**: 5-10% of users → ₹15-30 crore annual revenue (at 1M users)
 
 #### 2. **B2B Partnerships**
-- **Schools & Colleges**: License MindSaathi for student mental health
+- **Schools & Colleges**: License ManoRakshak for student mental health
   - Bulk licensing: ₹5-10 lakh per institution
   - Dashboard for counselors to see anonymized trends
   
@@ -354,7 +354,7 @@ Currently supports:
 ### For Gen Z Users
 ```
 Day 1: Feeling anxious about exam results
-→ Open MindSaathi, chat about fears
+→ Open ManoRakshak, chat about fears
 → AI helps explore root cause (is it really about exam? 
    Or pressure from family?)
 → Feel heard and understood
@@ -362,7 +362,7 @@ Day 1: Feeling anxious about exam results
 → Sleep better knowing someone "gets it"
 
 Day 5: Recurring anxiety about same topic
-→ Open MindSaathi, reference previous conversation
+→ Open ManoRakshak, reference previous conversation
 → AI notices pattern, helps go deeper
 → Realize underlying perfectionism issue
 → Building self-awareness over time
@@ -377,7 +377,7 @@ Day 30: Month review via Dashboard
 ### For Gen Alpha Users (with Parental Oversight)
 ```
 Day 1: Cyberbullying at school
-→ Parent sets up MindSaathi for child
+→ Parent sets up ManoRakshak for child
 → Child feels safe talking to AI (not adult judgment)
 → AI validates feelings, explores impact
 → Parents can optionally review anonymized journal
@@ -457,7 +457,7 @@ npm install
 3. **Create `.env` file**
 ```env
 # Database
-MONGO_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/mindsaathi
+MONGO_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/manorakshak
 
 # API Keys
 GROQ_API_KEY=<your_groq_api_key>
@@ -568,7 +568,7 @@ Content-Type: application/json
   "content": "I'm feeling really anxious about my exams",
   "isIncognito": false,
   "conversationHistory": [
-    { "role": "user", "content": "Hi MindSaathi" },
+    { "role": "user", "content": "Hi ManoRakshak" },
     { "role": "assistant", "content": "Hello! How can I help?" }
   ]
 }
@@ -611,7 +611,7 @@ Response:
   "_id": "65f4a2c1b9d8e7f3a0b1c2d5",
   "userId": "65f4a2c1b9d8e7f3a0b1c2d3",
   "date": "2024-02-27",
-  "content": "Today was challenging. I spoke with MindSaathi about my exam anxiety...",
+  "content": "Today was challenging. I spoke with ManoRakshak about my exam anxiety...",
   "mood": "okay",
   "stressScore": 5,
   "aiSummary": "..."
@@ -742,7 +742,7 @@ Logic_Lords/
 
 ```env
 # ===== DATABASE =====
-MONGO_URI=mongodb+srv://username:password@cluster0.mongodb.net/mindsaathi?retryWrites=true&w=majority
+MONGO_URI=mongodb+srv://username:password@cluster0.mongodb.net/manorakshak?retryWrites=true&w=majority
 
 # ===== GROQ AI =====
 GROQ_API_KEY=gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -857,10 +857,10 @@ CLIENT_URL=http://localhost:3000  # Frontend URL
 
 ## 📞 Contact & Support
 
-- **Email**: mindsaathi@logiclo rds.in
-- **Website**: mindsaathi.in (coming soon)
-- **Instagram**: @mindsaathi_official
-- **Twitter**: @mindsaathi
+- **Email**: manorakshak@logiclo rds.in
+- **Website**: manorakshak.in (coming soon)
+- **Instagram**: @manorakshak_official
+- **Twitter**: @manorakshak
 
 ---
 

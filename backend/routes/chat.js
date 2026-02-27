@@ -10,7 +10,7 @@ try {
   groq = new Groq({
     apiKey: process.env.GROQ_API_KEY,
     defaultHeaders: {
-      'user-agent': 'MindSaathi/1.0',
+      'user-agent': 'ManoRakshak/1.0',
     },
   });
   console.log('✅ Groq SDK initialized successfully');
@@ -42,7 +42,7 @@ const buildSystemPrompt = (user) => {
   const lang = langMap[user.languagePreference] || 'English';
   const location = user.locality === 'rural' ? 'rural' : 'urban';
 
-  return `You are MindSaathi, an empathetic AI psychiatrist/counselor for Indian users. Your ONLY job is to have a genuine therapeutic conversation.
+  return `You are ManoRakshak, an empathetic AI psychiatrist/counselor for Indian users. Your ONLY job is to have a genuine therapeutic conversation.
 
 CORE PRINCIPLE - YOU ARE A PSYCHIATRIST, NOT A SELF-HELP GUIDE:
 - Your role is to LISTEN, UNDERSTAND, and EXPLORE with the user

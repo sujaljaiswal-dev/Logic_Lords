@@ -61,7 +61,7 @@
   border-radius: var(--radius-md);
   padding: 2rem;
   box-shadow: var(--shadow-sm);
-  border: 1px solid rgba(0,0,0,0.04);
+  border: 1px solid rgba(0, 0, 0, 0.04);
   margin-bottom: 2rem;
 }
 
@@ -89,11 +89,30 @@
   margin-bottom: 1rem;
 }
 
-.mood-great { background: rgba(39,174,96,0.1); color: #27ae60; }
-.mood-good { background: rgba(52,152,219,0.1); color: #3498db; }
-.mood-okay { background: rgba(230,126,34,0.1); color: #e67e22; }
-.mood-low { background: rgba(155,89,182,0.1); color: #9b59b6; }
-.mood-terrible { background: rgba(192,57,43,0.1); color: #c0392b; }
+.mood-great {
+  background: rgba(39, 174, 96, 0.1);
+  color: #27ae60;
+}
+
+.mood-good {
+  background: rgba(52, 152, 219, 0.1);
+  color: #3498db;
+}
+
+.mood-okay {
+  background: rgba(230, 126, 34, 0.1);
+  color: #e67e22;
+}
+
+.mood-low {
+  background: rgba(155, 89, 182, 0.1);
+  color: #9b59b6;
+}
+
+.mood-terrible {
+  background: rgba(192, 57, 43, 0.1);
+  color: #c0392b;
+}
 
 .journal-empty {
   text-align: center;
@@ -110,7 +129,7 @@
   border-radius: var(--radius-md);
   padding: 1.5rem;
   box-shadow: var(--shadow-sm);
-  border: 1px solid rgba(0,0,0,0.04);
+  border: 1px solid rgba(0, 0, 0, 0.04);
   margin-bottom: 2rem;
 }
 
@@ -183,7 +202,7 @@
   border-radius: var(--radius-md);
   padding: 1.5rem;
   box-shadow: var(--shadow-sm);
-  border: 1px solid rgba(0,0,0,0.04);
+  border: 1px solid rgba(0, 0, 0, 0.04);
   cursor: pointer;
   transition: all var(--transition);
 }
@@ -221,7 +240,7 @@
 .journal-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;

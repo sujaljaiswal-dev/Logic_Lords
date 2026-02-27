@@ -18,7 +18,7 @@ export default function Layout() {
         <div className="sidebar-logo">
           <div className="logo-icon">🌿</div>
           <div>
-            <h2>MindSaathi</h2>
+            <h2>ManoRakshak</h2>
             {isIncognito && <span className="incognito-badge">Incognito</span>}
           </div>
         </div>

@@ -33,7 +33,7 @@ export default function Login() {
       <div className="auth-left">
         <div className="auth-brand">
           <span className="brand-icon">🌿</span>
-          <h1>MindSaathi</h1>
+          <h1>ManoRakshak</h1>
           <p>Your compassionate mental health companion, available 24/7</p>
         </div>
         <div className="auth-tagline">

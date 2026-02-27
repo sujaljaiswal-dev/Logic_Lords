@@ -2,12 +2,13 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import './Chat.css';
+import Siri from './SiriSphere.js'
 
 const API = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 const WELCOME_MESSAGES = {
-  english: "Hello! I'm MindSaathi, your mental health companion. How are you feeling today? 🌿",
-  hindi: "नमस्ते! मैं MindSaathi हूँ, आपका मानसिक स्वास्थ्य साथी। आज आप कैसा महसूस कर रहे हैं? 🌿",
+  english: "Hello! I'm ManoRakshak, your mental health companion. How are you feeling today? 🌿",
+  hindi: "नमस्ते! मैं ManoRakshak हूँ, आपका मानसिक स्वास्थ्य साथी। आज आप कैसा महसूस कर रहे हैं? 🌿",
 };
 
 export default function Chat() {
@@ -321,106 +322,104 @@ export default function Chat() {
   };
 
   return (
-    <div className={`chat-page ${isIncognito ? 'incognito' : ''}`}>
-      <div className="chat-header">
-        <div className="chat-header-left">
-          <div className="chat-avatar">🌿</div>
-          <div>
-            <h2>MindSaathi</h2>
-            <p>● Online — here for you</p>
-          </div>
-        </div>
-        <div className="chat-header-right">
-          <span className={`stress-indicator ${stressInfo.cls}`}>
-            {stressInfo.label} ({stressScore}/10)
-          </span>
-          <button className={`header-action-btn ${speechOutput ? 'active' : ''}`} onClick={() => setSpeechOutput(p => !p)}>
-            🔊 Voice Output
-          </button>
-          <button className={`header-action-btn ${showCamera ? 'active' : ''}`} onClick={() => setShowCamera(p => !p)}>
-            📷 Face Detection
-          </button>
-        </div>
-      </div>
+    <>
+    /* In Chat.js, within the return statement */
 
-      {showCamera && (
-        <div className="face-detection-panel">
-          <video ref={videoRef} autoPlay muted playsInline />
-          <canvas ref={canvasRef} style={{ display: 'none' }} />
-          <div className="face-result">
-            {faceResult ? (
-              <>
-                <strong>{faceResult.emotion} {faceResult.stressLevel !== undefined ? `(stress: ${faceResult.stressLevel}/10)` : ''}</strong>
-                <span>{faceResult.description}</span>
-              </>
-            ) : <span>Press "Analyze" to detect your expression</span>}
-          </div>
-          <button className="header-action-btn" onClick={captureAndAnalyzeFace} disabled={analyzingFace}>
-            {analyzingFace ? 'Analyzing...' : '🔍 Analyze Expression'}
-          </button>
-        </div>
-      )}
-
-      <div className="messages-area">
-        {messages.map((msg, i) => (
-          <div key={i} className={`message-bubble ${msg.role}`}>
-            <div className="bubble-content">{msg.content}</div>
-            <span className="bubble-time">
-              {msg.time?.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+      <div className={`chat-page ${isIncognito ? 'incognito' : ''}`}>
+        <div className="chat-header">
+          <Siri isSpeaking={isSpeaking} />
+          <div className="chat-header-right">
+            <span className={`stress-indicator ${stressInfo.cls}`}>
+              {stressInfo.label} ({stressScore}/10)
             </span>
+            <button className={`header-action-btn ${speechOutput ? 'active' : ''}`} onClick={() => setSpeechOutput(p => !p)}>
+              🔊 Voice Output
+            </button>
+            <button className={`header-action-btn ${showCamera ? 'active' : ''}`} onClick={() => setShowCamera(p => !p)}>
+              📷 Face Detection
+            </button>
           </div>
-        ))}
-        {loading && (
-          <div className="typing-indicator">
-            <div className="typing-dot" />
-            <div className="typing-dot" />
-            <div className="typing-dot" />
+        </div>
+
+        {showCamera && (
+          <div className="face-detection-panel">
+            <video ref={videoRef} autoPlay muted playsInline />
+            <canvas ref={canvasRef} style={{ display: 'none' }} />
+            <div className="face-result">
+              {faceResult ? (
+                <>
+                  <strong>{faceResult.emotion} {faceResult.stressLevel !== undefined ? `(stress: ${faceResult.stressLevel}/10)` : ''}</strong>
+                  <span>{faceResult.description}</span>
+                </>
+              ) : <span>Press "Analyze" to detect your expression</span>}
+            </div>
+            <button className="header-action-btn" onClick={captureAndAnalyzeFace} disabled={analyzingFace}>
+              {analyzingFace ? 'Analyzing...' : '🔍 Analyze Expression'}
+            </button>
           </div>
         )}
-        <div ref={messagesEndRef} />
-      </div>
 
-      <div className="chat-input-area">
-        <div className="input-toolbar">
-          <button
-            className={`toolbar-btn ${isRecording ? 'recording-pulse' : ''}`}
-            onClick={() => isRecording ? stopRecording() : startRecording()}
-            title={isRecording ? 'Click to stop recording' : 'Click to start speaking'}
-          >
-            🎙️ {isRecording ? '⏹️ Stop Speaking' : '🎤 Click to Speak'}
-          </button>
-          {transcriptText && isRecording && (
-            <div className="transcript-display">
-              <span>🎤 Recording... {transcriptText}</span>
+        <div className="messages-area">
+          {messages.map((msg, i) => (
+            <div key={i} className={`message-bubble ${msg.role}`}>
+              <div className="bubble-content">{msg.content}</div>
+              <span className="bubble-time">
+                {msg.time?.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+              </span>
+            </div>
+          ))}
+          {loading && (
+            <div className="typing-indicator">
+              <div className="typing-dot" />
+              <div className="typing-dot" />
+              <div className="typing-dot" />
             </div>
           )}
-          {isSpeaking && (
-            <button className="toolbar-btn active" onClick={() => window.speechSynthesis.cancel()}>
-              🔇 Stop Speaking
-            </button>
-          )}
+          <div ref={messagesEndRef} />
         </div>
 
-        {isIncognito && (
-          <div className="incognito-chat-notice">
-            🕵️ Incognito mode — this conversation will not be saved
+        <div className="chat-input-area">
+          <div className="input-toolbar">
+            <button
+              className={`toolbar-btn ${isRecording ? 'recording-pulse' : ''}`}
+              onClick={() => isRecording ? stopRecording() : startRecording()}
+              title={isRecording ? 'Click to stop recording' : 'Click to start speaking'}
+            >
+              🎙️ {isRecording ? '⏹️ Stop Speaking' : '🎤 Click to Speak'}
+            </button>
+            {transcriptText && isRecording && (
+              <div className="transcript-display">
+                <span>🎤 Recording... {transcriptText}</span>
+              </div>
+            )}
+            {isSpeaking && (
+              <button className="toolbar-btn active" onClick={() => window.speechSynthesis.cancel()}>
+                🔇 Stop Speaking
+              </button>
+            )}
           </div>
-        )}
 
-        <div className="input-row">
-          <textarea
-            className="chat-input-row-textarea"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={handleKey}
-            placeholder="Type your message... (Enter to send)"
-            rows={1}
-          />
-          <button className="send-btn" onClick={() => sendMessage(input)} disabled={loading || !input.trim()}>
-            ➤
-          </button>
+          {isIncognito && (
+            <div className="incognito-chat-notice">
+              🕵️ Incognito mode — this conversation will not be saved
+            </div>
+          )}
+
+          <div className="input-row">
+            <textarea
+              className="chat-input-row-textarea"
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={handleKey}
+              placeholder="Type your message... (Enter to send)"
+              rows={1}
+            />
+            <button className="send-btn" onClick={() => sendMessage(input)} disabled={loading || !input.trim()}>
+              ➤
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

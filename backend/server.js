@@ -26,7 +26,7 @@ app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 // MongoDB connection
 console.log('🔄 Connecting to MongoDB...');
-console.log('Host:', process.env.MONGO_URI.split('@')[1]?.split('/')[0] || 'unknown');
+
 mongoose.connect(process.env.MONGO_URI, {
   serverSelectionTimeoutMS: 5000,
   socketTimeoutMS: 45000,

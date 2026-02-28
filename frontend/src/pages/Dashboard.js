@@ -20,7 +20,7 @@ const stressColor = (level) => {
 };
 
 export default function Dashboard() {
-  const { user, isIncognito } = useAuth();
+  const { user, isIncognito, connectionSpeed } = useAuth();
   const navigate = useNavigate();
   const [journals, setJournals] = useState([]);
   const [tip] = useState(TIPS[Math.floor(Math.random() * TIPS.length)]);
@@ -44,6 +44,20 @@ export default function Dashboard() {
       {isIncognito && (
         <div className="incognito-notice">
           🕵️ <span>You're in Incognito Mode — nothing is being saved or tracked right now.</span>
+        </div>
+      )}
+
+      {connectionSpeed === 'very-slow' && (
+        <div style={{
+          background: '#fff3cd',
+          border: '1px solid #ffc107',
+          padding: '0.75rem 1rem',
+          marginBottom: '1rem',
+          borderRadius: '0.5rem',
+          color: '#856404',
+          fontSize: '0.9rem'
+        }}>
+          ⚠️ <strong>Slow Connection Detected:</strong> Some features like voice chat and camera are disabled to save data. Text chat works great!
         </div>
       )}
 

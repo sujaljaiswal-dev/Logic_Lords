@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import './Layout.css';
 
 export default function Layout() {
-  const { logout, isIncognito, toggleIncognito } = useAuth();
+  const { logout, isIncognito, toggleIncognito, toggleSlowMode, manualSlowMode } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -49,6 +49,17 @@ export default function Layout() {
             <span>🕵️</span>
             Incognito Mode
             <div className={`toggle-switch ${isIncognito ? 'on' : ''}`}>
+              <div className="toggle-knob" />
+            </div>
+          </button>
+          <button
+            className={`incognito-toggle ${manualSlowMode ? 'active' : ''}`}
+            onClick={toggleSlowMode}
+            title="Enable Data Saver Mode to disable voice and camera features"
+          >
+            <span>📶</span>
+            Data Saver Mode
+            <div className={`toggle-switch ${manualSlowMode ? 'on' : ''}`}>
               <div className="toggle-knob" />
             </div>
           </button>

@@ -157,20 +157,20 @@ const styles = `
 
   /* ── IDLE layer colors — cooler, slower, dimmer ─────────────── */
   .idle .ss-l1 {
-    background: radial-gradient(ellipse 55% 50% at 42% 40%, #00ccff 0%, #0066cc 40%, transparent 68%);
+    background: radial-gradient(ellipse 55% 50% at 42% 40%, #00ccff 0%, #1c8af7 40%, transparent 68%);
     opacity: 0.35;
     top: -32%; left: -32%;
     animation: ss-idle1 5s infinite ease-in-out;
   }
   .idle .ss-l2 {
-    background: radial-gradient(ellipse 60% 52% at 58% 52%, #aa00ff 0%, #6600cc 38%, transparent 66%);
+    background: radial-gradient(ellipse 60% 52% at 58% 52%, #aa00ff 0%, #cc00aa 38%, transparent 66%);
     opacity: 0.3;
     top: -28%; right: -32%;
     animation: ss-idle2 6.5s infinite ease-in-out;
     animation-delay: -2s;
   }
   .idle .ss-l3 {
-    background: radial-gradient(ellipse 50% 55% at 50% 60%, #0033ff 0%, #0011aa 42%, transparent 70%);
+    background: radial-gradient(ellipse 50% 55% at 50% 60%, #0033ff 0%, #33aa00 42%, transparent 70%);
     opacity: 0.28;
     bottom: -32%; left: -12%;
     animation: ss-idle3 5.8s infinite ease-in-out;
@@ -274,23 +274,23 @@ const styles = `
 `;
 
 export default function SiriSphere({ isSpeaking = false }) {
-    const mode = isSpeaking ? "speaking" : "idle";
+  const mode = isSpeaking ? "speaking" : "idle";
 
-    return (
-        <>
-            <style>{styles}</style>
-            <div className={`ss-wrapper ${mode}`}>
-                <div className={`ss-sphere ${mode}`}>
-                    <div className="ss-layer ss-l1" />
-                    <div className="ss-layer ss-l2" />
-                    <div className="ss-layer ss-l3" />
-                    <div className="ss-layer ss-l4" />
-                    <div className="ss-layer ss-l5" />
-                    <div className="ss-core" />
-                </div>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <style>{styles}</style>
+      <div className={`ss-wrapper ${mode}`}>
+        <div className={`ss-sphere ${mode}`}>
+          <div className="ss-layer ss-l1" />
+          <div className="ss-layer ss-l2" />
+          <div className="ss-layer ss-l3" />
+          <div className="ss-layer ss-l4" />
+          <div className="ss-layer ss-l5" />
+          <div className="ss-core" />
+        </div>
+      </div>
+    </>
+  );
 }
 
 

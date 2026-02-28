@@ -12,7 +12,7 @@ const WELCOME_MESSAGES = {
 };
 
 export default function Chat() {
-  const { user, isIncognito } = useAuth();
+  const { user, isIncognito, connectionSpeed } = useAuth();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -27,6 +27,15 @@ export default function Chat() {
   const [transcriptText, setTranscriptText] = useState('');
   const [isRecognitionActive, setIsRecognitionActive] = useState(false);
 
+  // Disable heavy features for slow connections
+  const isSlowConnection = connectionSpeed === 'slow' || connectionSpeed === 'very-slow';
+  const showConnectionWarning = isSlowConnection;
+
+  // Log connection status on mount and when it changes
+  useEffect(() => {
+    console.log(`🎯 Chat.js - Connection Speed: ${connectionSpeed}, Is Slow: ${isSlowConnection}`);
+  }, [connectionSpeed, isSlowConnection]);
+
   const messagesEndRef = useRef(null);
   const recognitionRef = useRef(null);
   const videoRef = useRef(null);
@@ -37,6 +46,9 @@ export default function Chat() {
 
   // Define speak first (used by sendMessage)
   const speak = useCallback((text) => {
+    // Don't speak on slow connections
+    if (isSlowConnection) return;
+
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     const langMap = {
@@ -91,7 +103,7 @@ export default function Chat() {
     };
     utterance.onend = () => setIsSpeaking(false);
     window.speechSynthesis.speak(utterance);
-  }, [user?.languagePreference]);
+  }, [user?.languagePreference, isSlowConnection]);
 
   // Define sendMessage (uses speak)
   const sendMessage = useCallback(async (text) => {
@@ -227,6 +239,11 @@ export default function Chat() {
 
   // Camera setup
   useEffect(() => {
+    if (isSlowConnection) {
+      setShowCamera(false);
+      return; // Don't initialize camera on slow connections
+    }
+
     if (showCamera) {
       navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
@@ -243,7 +260,7 @@ export default function Chat() {
     return () => {
       if (streamRef.current) streamRef.current.getTracks().forEach(t => t.stop());
     };
-  }, [showCamera]);
+  }, [showCamera, isSlowConnection]);
 
   const startRecording = useCallback(() => {
     if (!recognitionSupported) {
@@ -323,19 +340,53 @@ export default function Chat() {
 
   return (
     <>
-    /* In Chat.js, within the return statement */
-
       <div className={`chat-page ${isIncognito ? 'incognito' : ''}`}>
+        {showConnectionWarning && (
+          <div style={{
+            background: '#fff3cd',
+            border: '2px solid #ff6b6b',
+            padding: '1rem',
+            marginBottom: '1.5rem',
+            borderRadius: '0.5rem',
+            color: '#856404',
+            fontSize: '0.95rem',
+            display: 'flex',
+            gap: '0.75rem',
+            alignItems: 'flex-start'
+          }}>
+            <span style={{ fontSize: '1.2rem' }}>📶</span>
+            <div>
+              <strong>📊 Data Saver Mode Active</strong>
+              <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>
+                Slow connection detected ({connectionSpeed}). Voice and camera features are disabled to save data. 💬 Text chat works great!
+              </p>
+              <p style={{ margin: '0.3rem 0 0 0', fontSize: '0.85rem', opacity: 0.8 }}>
+                Tip: Go to sidebar and toggle "Data Saver Mode" to manually control features.
+              </p>
+            </div>
+          </div>
+        )}
+
         <div className="chat-header">
           <Siri isSpeaking={isSpeaking} />
           <div className="chat-header-right">
             <span className={`stress-indicator ${stressInfo.cls}`}>
               {stressInfo.label} ({stressScore}/10)
             </span>
-            <button className={`header-action-btn ${speechOutput ? 'active' : ''}`} onClick={() => setSpeechOutput(p => !p)}>
+            <button
+              className={`header-action-btn ${speechOutput ? 'active' : ''}`}
+              onClick={() => setSpeechOutput(p => !p)}
+              disabled={isSlowConnection}
+              title={isSlowConnection ? 'Disabled on slow connections' : ''}
+            >
               🔊 Voice Output
             </button>
-            <button className={`header-action-btn ${showCamera ? 'active' : ''}`} onClick={() => setShowCamera(p => !p)}>
+            <button
+              className={`header-action-btn ${showCamera ? 'active' : ''}`}
+              onClick={() => setShowCamera(p => !p)}
+              disabled={isSlowConnection}
+              title={isSlowConnection ? 'Disabled on slow connections' : ''}
+            >
               📷 Face Detection
             </button>
           </div>
@@ -383,7 +434,8 @@ export default function Chat() {
             <button
               className={`toolbar-btn ${isRecording ? 'recording-pulse' : ''}`}
               onClick={() => isRecording ? stopRecording() : startRecording()}
-              title={isRecording ? 'Click to stop recording' : 'Click to start speaking'}
+              disabled={isSlowConnection}
+              title={isSlowConnection ? 'Disabled on slow connections' : isRecording ? 'Click to stop recording' : 'Click to start speaking'}
             >
               🎙️ {isRecording ? '⏹️ Stop Speaking' : '🎤 Click to Speak'}
             </button>

@@ -15,6 +15,59 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('ms_token'));
   const [loading, setLoading] = useState(true);
   const [isIncognito, setIsIncognito] = useState(false);
+  const [connectionSpeed, setConnectionSpeed] = useState('unknown'); // 'fast', 'slow', 'very-slow', 'unknown'
+  const [manualSlowMode, setManualSlowMode] = useState(localStorage.getItem('manual_slow_mode') === 'true'); // Manual override for slow connections
+
+  // Detect internet connection quality
+  useEffect(() => {
+    const detectConnection = () => {
+      let speed = 'unknown';
+
+      // Method 1: Modern API (navigator.connection) - Chrome, Edge, Opera
+      if ('connection' in navigator) {
+        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (conn) {
+          const effectiveType = conn.effectiveType;
+
+          if (effectiveType === '4g') {
+            speed = 'fast';
+          } else if (effectiveType === '3g') {
+            speed = 'slow';
+          } else if (effectiveType === '2g' || effectiveType === 'slow-2g') {
+            speed = 'very-slow';
+          }
+
+          console.log(`📡 Method 1 - Connection detected: ${effectiveType} (${conn.downlink?.toFixed(1) || 'N/A'} Mbps)`);
+        }
+      } else {
+        // Method 2: Fallback - Check localStorage for user preference
+        const savedPref = localStorage.getItem('connection_speed_pref');
+        if (savedPref) {
+          speed = savedPref;
+          console.log(`📡 Method 2 - Using saved preference: ${speed}`);
+        } else {
+          // Method 3: Try to detect via performance API
+          if ('performance' in window && 'memory' in performance) {
+            console.log(`📡 Method 3 - Performance API available`);
+          }
+          console.log('📡 No connection detection available - set manually if needed');
+        }
+      }
+
+      setConnectionSpeed(speed);
+    };
+
+    detectConnection();
+
+    // Listen for connection changes
+    if ('connection' in navigator) {
+      const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      if (conn) {
+        conn.addEventListener('change', detectConnection);
+        return () => conn.removeEventListener('change', detectConnection);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const initializeAuth = async () => {
@@ -77,8 +130,21 @@ export const AuthProvider = ({ children }) => {
 
   const toggleIncognito = () => setIsIncognito(prev => !prev);
 
+  // Toggle manual slow mode for users on slow connections
+  const toggleSlowMode = () => {
+    setManualSlowMode(prev => {
+      const newValue = !prev;
+      localStorage.setItem('manual_slow_mode', newValue);
+      console.log(`🔄 Slow mode toggled: ${newValue ? 'ON' : 'OFF'}`);
+      return newValue;
+    });
+  };
+
+  // Determine effective connection speed (auto-detected or manual)
+  const effectiveConnectionSpeed = manualSlowMode ? 'very-slow' : connectionSpeed;
+
   return (
-    <AuthContext.Provider value={{ user, token, loading, isIncognito, login, register, logout, toggleIncognito }}>
+    <AuthContext.Provider value={{ user, token, loading, isIncognito, login, register, logout, toggleIncognito, connectionSpeed: effectiveConnectionSpeed, toggleSlowMode, manualSlowMode }}>
       {children}
     </AuthContext.Provider>
   );

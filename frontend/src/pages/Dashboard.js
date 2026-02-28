@@ -106,10 +106,10 @@ export default function Dashboard() {
               <span className="action-desc">View & generate your daily journal</span>
             </button>
           )}
-          <button className="action-btn breathe" onClick={() => navigate('/chat')}>
+          <button className="action-btn breathe" onClick={() => navigate('/stress-relief')}>
             <span className="action-icon">🧘</span>
-            <span className="action-label">Breathing Exercise</span>
-            <span className="action-desc">Calm down with guided breathing</span>
+            <span className="action-label">Stress Relief</span>
+            <span className="action-desc">Videos, breathing exercises & relaxation</span>
           </button>
         </div>
       </div>

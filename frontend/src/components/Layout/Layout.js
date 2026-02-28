@@ -35,6 +35,11 @@ export default function Layout() {
             </NavLink>
           </li>
           <li>
+            <NavLink to="/stress-relief" className={({ isActive }) => isActive ? 'active' : ''}>
+              <span className="nav-icon">🧘</span> Stress Relief
+            </NavLink>
+          </li>
+          <li>
             <NavLink to="/journal" className={({ isActive }) => isActive ? 'active' : ''}>
               <span className="nav-icon">📓</span> Journal
             </NavLink>

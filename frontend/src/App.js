@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Chat from './pages/Chat';
 import JournalPage from './pages/JournalPage';
+import StressRelief from './pages/StressRelief';
 import Layout from './components/Layout/Layout';
 
 const PrivateRoute = ({ children }) => {
@@ -30,6 +31,7 @@ function AppRoutes() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="chat" element={<Chat />} />
         <Route path="journal" element={<JournalPage />} />
+        <Route path="stress-relief" element={<StressRelief />} />
       </Route>
     </Routes>
   );

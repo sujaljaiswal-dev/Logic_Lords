@@ -1,84 +1,93 @@
+/* ── Auth page layout ─────────────────────────── */
 .auth-page {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
 }
 
+/* ── Left panel ───────────────────────────────── */
 .auth-left {
-  background: var(--deep);
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 3rem;
-  position: relative;
-  overflow: hidden;
+  border-right: 1px solid var(--border);
+  background: linear-gradient(160deg, rgba(124, 58, 237, 0.06) 0%, rgba(6, 182, 212, 0.03) 100%);
 }
 
+/* Animated orbs behind particles */
 .auth-left::before {
   content: '';
   position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(122, 158, 126, 0.3) 0%, transparent 70%);
-  top: -100px;
-  left: -100px;
+  width: 380px;
+  height: 380px;
+  top: -120px;
+  left: -80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.24) 0%, transparent 65%);
+  animation: float 8s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .auth-left::after {
   content: '';
   position: absolute;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(196, 112, 74, 0.2) 0%, transparent 70%);
-  bottom: -80px;
-  right: -80px;
+  width: 280px;
+  height: 280px;
+  bottom: -60px;
+  right: -60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.18) 0%, transparent 65%);
+  animation: float 10s ease-in-out infinite reverse;
+  pointer-events: none;
 }
 
+/* ── Brand ────────────────────────────────────── */
 .auth-brand {
   text-align: center;
   position: relative;
   z-index: 1;
+  animation: fadeInUp 0.7s var(--spring) both;
 }
 
 .auth-brand .brand-icon {
-  font-size: 4rem;
+  font-size: 3.5rem;
   display: block;
-  margin-bottom: 1rem;
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-8px);
-  }
+  margin-bottom: 1.2rem;
+  animation: float 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.6));
 }
 
 .auth-brand h1 {
-  color: white;
   font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.6rem;
 }
 
 .auth-brand p {
-  color: var(--sage-light);
-  font-size: 1rem;
-  max-width: 280px;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  max-width: 270px;
   line-height: 1.7;
 }
 
+/* ── Feature cards ────────────────────────────── */
 .auth-tagline {
-  margin-top: 3rem;
+  margin-top: 2.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.7rem;
   position: relative;
   z-index: 1;
 }
@@ -87,19 +96,55 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-size: 0.87rem;
+  padding: 0.55rem 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition);
+  animation: fadeInLeft 0.5s var(--spring) both;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Feature card shine on hover */
+.auth-feature::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transition: left 0.5s ease;
+}
+
+.auth-feature:hover::before {
+  left: 200%;
+}
+
+.auth-feature:hover {
+  background: var(--surface-2);
+  border-color: rgba(124, 58, 237, 0.25);
+  color: var(--text-primary);
+  transform: translateX(4px);
 }
 
 .auth-feature span:first-child {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  width: 22px;
+  text-align: center;
+  flex-shrink: 0;
 }
 
+/* ── Right panel ──────────────────────────────── */
 .auth-right {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem;
+  padding: 2.5rem;
+  animation: fadeInRight 0.6s var(--spring) both;
 }
 
 .auth-form-box {
@@ -109,112 +154,236 @@
 
 .auth-form-box h2 {
   font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
   color: var(--text-primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
+  animation: fadeInUp 0.5s var(--spring) both;
 }
 
 .auth-form-box .subtitle {
-  color: var(--text-secondary);
+  color: var(--text-muted);
   margin-bottom: 2rem;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
+  animation: fadeInUp 0.5s 0.05s var(--spring) both;
 }
 
+/* ── Floating label groups ────────────────────── */
 .form-group {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.1rem;
 }
 
-.form-group label {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin-bottom: 0.4rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.form-group.float-label {
+  position: relative;
+  margin-bottom: 1.2rem;
 }
 
-.form-group input,
-.form-group select {
+.form-group.float-label input {
   width: 100%;
-  padding: 0.85rem 1rem;
-  border: 1.5px solid var(--sand);
+  padding: 1rem 1rem 0.5rem;
+  border: 1.5px solid var(--border);
   border-radius: var(--radius-sm);
-  background: white;
+  background: var(--surface);
   font-size: 0.95rem;
   color: var(--text-primary);
-  transition: border-color var(--transition), box-shadow var(--transition);
   outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+  min-height: 54px;
 }
 
-.form-group input:focus,
-.form-group select:focus {
-  border-color: var(--sage);
-  box-shadow: 0 0 0 3px rgba(122, 158, 126, 0.15);
+.form-group.float-label label {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
 }
 
-.auth-btn {
+/* Label floats up on active */
+.form-group.float-label.is-active label {
+  top: 0.55rem;
+  transform: translateY(0);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--violet-light);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.form-group.float-label.is-active input {
+  padding-top: 1.4rem;
+  border-color: var(--violet);
+  background: rgba(124, 58, 237, 0.05);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
+/* Select groups */
+.form-group.select-group {
+  margin-bottom: 1.1rem;
+}
+
+.select-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.form-group select {
   width: 100%;
-  padding: 1rem;
-  background: var(--sage-dark);
+  padding: 0.8rem 2.2rem 0.8rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.form-group select:focus {
+  border-color: var(--violet);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
+.form-group select option {
+  background: #1e293b;
+  color: var(--text-primary);
+}
+
+/* ── Ripple button ────────────────────────────── */
+.auth-btn.ripple-btn {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 0.92rem;
+  background: var(--grad-primary);
   color: white;
   border: none;
   border-radius: var(--radius-sm);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  transition: all var(--transition);
-  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: transform var(--transition), box-shadow var(--transition);
+  margin-top: 0.75rem;
 }
 
-.auth-btn:hover {
-  background: var(--sage);
+.auth-btn.ripple-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent);
+  pointer-events: none;
+}
+
+/* Traveling shimmer */
+.auth-btn.ripple-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  animation: shine-sweep 2.5s ease-in-out infinite;
+}
+
+.auth-btn.ripple-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: var(--glow-violet);
+}
+
+.auth-btn.ripple-btn:active:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
 }
 
-.auth-btn:disabled {
-  opacity: 0.6;
+.auth-btn.ripple-btn:disabled {
+  opacity: 0.55;
   cursor: not-allowed;
-  transform: none;
 }
 
+/* 3-dot loading animation */
+.btn-loading {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-loading span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: white;
+  display: block;
+  animation: typing-dot 1.1s ease-in-out infinite;
+}
+
+.btn-loading span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.btn-loading span:nth-child(3) {
+  animation-delay: 0.30s;
+}
+
+/* ── Error ────────────────────────────────────── */
 .auth-error {
-  background: #fdecea;
-  border: 1px solid #f5c6cb;
-  color: var(--error);
+  background: rgba(244, 63, 94, 0.08);
+  border: 1px solid rgba(244, 63, 94, 0.28);
+  color: #fca5a5;
   padding: 0.75rem 1rem;
   border-radius: var(--radius-sm);
-  font-size: 0.9rem;
+  font-size: 0.87rem;
   margin-bottom: 1rem;
+  animation: bounce-in 0.3s var(--spring) both;
 }
 
+/* ── Switch link ──────────────────────────────── */
 .auth-switch {
   text-align: center;
   margin-top: 1.5rem;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-size: 0.87rem;
 }
 
 .auth-switch a {
-  color: var(--sage-dark);
-  font-weight: 600;
+  color: var(--violet-light);
+  font-weight: 700;
+  transition: color var(--transition);
 }
 
 .auth-switch a:hover {
-  color: var(--terracotta);
+  color: var(--cyan-light);
 }
 
-@media (max-width: 768px) {
+@media (max-width:768px) {
   .auth-page {
     grid-template-columns: 1fr;
   }
 
   .auth-left {
     padding: 2rem;
-    min-height: 30vh;
+    min-height: 35vh;
   }
 
   .auth-brand h1 {
     font-size: 1.8rem;
+  }
+
+  .auth-right {
+    padding: 2rem 1.5rem;
   }
 }

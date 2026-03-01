@@ -1,41 +1,37 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import ParticleBackground from '../components/ParticleBackground/ParticleBackground';
 import './Auth.css';
 
 export default function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    username: '',
-    password: '',
-    confirmPassword: '',
-    languagePreference: 'english',
-    locality: 'urban',
+    username: '', password: '', confirmPassword: '',
+    languagePreference: 'english', locality: 'urban',
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [focused, setFocused] = useState({});
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleFocus = e => setFocused(f => ({ ...f, [e.target.name]: true }));
+  const handleBlur = e => setFocused(f => ({ ...f, [e.target.name]: false }));
+  const isFloating = (name) => focused[name] || form[name];
 
   const handleSubmit = async e => {
     e.preventDefault();
     setError('');
-    if (form.password !== form.confirmPassword) {
-      return setError('Passwords do not match');
-    }
-    if (form.password.length < 6) {
-      return setError('Password must be at least 6 characters');
-    }
+    if (form.password !== form.confirmPassword) return setError('Passwords do not match');
+    if (form.password.length < 6) return setError('Password must be at least 6 characters');
     setLoading(true);
     try {
       const { confirmPassword, ...payload } = form;
       await register(payload);
       navigate('/dashboard');
     } catch (err) {
-      console.error('Registration error:', err);
-      const errorMsg = err.response?.data?.message || err.message || 'Registration failed. Please try again or choose a different username.';
-      setError(errorMsg);
+      setError(err.response?.data?.message || 'Registration failed. Try a different username.');
     } finally {
       setLoading(false);
     }
@@ -43,20 +39,29 @@ export default function Register() {
 
   return (
     <div className="auth-page">
+      {/* ── Left panel ── */}
       <div className="auth-left">
+        <ParticleBackground count={60} color="#06b6d4" speed={0.6} />
         <div className="auth-brand">
           <span className="brand-icon">🌿</span>
           <h1>ManoRakshak</h1>
-          <p>Join thousands finding peace and support through compassionate AI</p>
+          <p>Join thousands finding peace through compassionate AI</p>
         </div>
         <div className="auth-tagline">
-          <div className="auth-feature"><span>🗣️</span><span>Hindi & English support</span></div>
-          <div className="auth-feature"><span>🏘️</span><span>Tailored for urban & rural India</span></div>
-          <div className="auth-feature"><span>🧘</span><span>Guided by psychiatry best practices</span></div>
-          <div className="auth-feature"><span>📓</span><span>AI-generated daily journal entries</span></div>
+          {[
+            ['🗣️', 'Hindi & English support'],
+            ['🏘️', 'Tailored for urban & rural India'],
+            ['🧘', 'Guided by psychiatry best practices'],
+            ['📓', 'AI-generated daily journal entries'],
+          ].map(([icon, text], i) => (
+            <div className="auth-feature" key={i} style={{ animationDelay: `${i * 0.1}s` }}>
+              <span>{icon}</span><span>{text}</span>
+            </div>
+          ))}
         </div>
       </div>
 
+      {/* ── Right panel ── */}
       <div className="auth-right">
         <div className="auth-form-box">
           <h2>Create account</h2>
@@ -65,56 +70,47 @@ export default function Register() {
           {error && <div className="auth-error">{error}</div>}
 
           <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Username (private)</label>
-              <input
-                name="username"
-                type="text"
-                placeholder="Choose a username"
-                value={form.username}
-                onChange={handleChange}
-                required
-              />
+            <div className={`form-group float-label ${isFloating('username') ? 'is-active' : ''}`}>
+              <input name="username" type="text" value={form.username}
+                onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur}
+                required id="reg-username" />
+              <label htmlFor="reg-username">Username (private)</label>
             </div>
-            <div className="form-group">
-              <label>Password</label>
-              <input
-                name="password"
-                type="password"
-                placeholder="Create a strong password"
-                value={form.password}
-                onChange={handleChange}
-                required
-                minLength={6}
-              />
+
+            <div className={`form-group float-label ${isFloating('password') ? 'is-active' : ''}`}>
+              <input name="password" type="password" value={form.password}
+                onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur}
+                required minLength={6} id="reg-password" />
+              <label htmlFor="reg-password">Password</label>
             </div>
-            <div className="form-group">
-              <label>Confirm Password</label>
-              <input
-                name="confirmPassword"
-                type="password"
-                placeholder="Repeat your password"
-                value={form.confirmPassword}
-                onChange={handleChange}
-                required
-              />
+
+            <div className={`form-group float-label ${isFloating('confirmPassword') ? 'is-active' : ''}`}>
+              <input name="confirmPassword" type="password" value={form.confirmPassword}
+                onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur}
+                required id="reg-confirm" />
+              <label htmlFor="reg-confirm">Confirm Password</label>
             </div>
-            <div className="form-group">
-              <label>Preferred Language</label>
+
+            <div className="form-group select-group">
+              <label className="select-label">Preferred Language</label>
               <select name="languagePreference" value={form.languagePreference} onChange={handleChange}>
                 <option value="english">English</option>
                 <option value="hindi">हिंदी (Hindi)</option>
               </select>
             </div>
-            <div className="form-group">
-              <label>Your Area</label>
+
+            <div className="form-group select-group">
+              <label className="select-label">Your Area</label>
               <select name="locality" value={form.locality} onChange={handleChange}>
                 <option value="urban">Urban (City / Town)</option>
                 <option value="rural">Rural (Village / Countryside)</option>
               </select>
             </div>
-            <button className="auth-btn" type="submit" disabled={loading}>
-              {loading ? 'Creating account...' : 'Create Account'}
+
+            <button className="auth-btn ripple-btn" type="submit" disabled={loading}>
+              {loading ? (
+                <span className="btn-loading"><span /><span /><span /></span>
+              ) : 'Create Account →'}
             </button>
           </form>
 

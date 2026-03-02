@@ -451,12 +451,11 @@
     transform: translateX(-100%);
     width: 280px;
     z-index: 300;
-    top: 56px;
-    bottom: 0;
+    top: 0;
+    /* bottom: 0; */
     height: calc(100vh - 56px);
     padding-top: 1.25rem;
-    /* overflow-y: auto; */
-    overflow-x: hidden;
+    overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
   }
 
